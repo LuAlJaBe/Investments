@@ -1,0 +1,32 @@
+version: '3'
+
+services:
+  biweb:
+    container_name: biweb
+    build: .
+    command: >
+      bash -c "python manage.py makemigrations
+      && python manage.py migrate
+      && python manage.py runserver 0.0.0.0:82"
+    volumes:
+      - ${BIWEB_HOST_VOLUME}:${BIWEB_CONTAINER_VOLUME}
+    ports:
+      - ${BIWEB_HOST_PORT}:82
+    stdin_open: true
+    tty: true
+    depends_on:
+      - bidb
+
+  bidb:
+    image: ${PG_BASE_IMAGE}
+    container_name: bidb
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_HOST_AUTH_METHOD=${POSTGRES_HOST_AUTH_METHOD}
+    volumes:
+      - ${PG_HOST_VOLUME}:${PG_CONTAINER_VOLUME}
+
+volumes:
+  pgdata:
