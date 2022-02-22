@@ -90,18 +90,18 @@ class CampaignsPreparer():
             self.get_customers_ids()
             self.add_new_ids_to_ids_set()
     
-    def get_campaign_name(self, user_number):
+    def get_template_name(self, user_number):
         for key in self.data:
             campaign = self.data[key]
             str_date = campaign['schedule'].strftime("%Y%m%d_%H%M")
             if campaign['lower_breakpoint'] <= user_number < campaign['upper_breakpoint']:
-                self.campaign_data['value'] = campaign['campaign_name'] + '_' + str_date
+                self.campaign_data['value'] = campaign['template_name'] + '_' + str_date
     
     def segment_customers(self):
         user_number = 0
         for customer_id in self.ids_set:
             try:
-                self.get_campaign_name(user_number)
+                self.get_template_name(user_number)
                 customer_change_field_url = self.customer_change_field_url_base.format(customer_id,self.field_name)
                 print(user_number)
                 print(customer_change_field_url)

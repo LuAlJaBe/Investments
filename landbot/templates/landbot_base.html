@@ -10,8 +10,17 @@
         <link rel="stylesheet" href="">
         {% tailwind_css %}
     </head>
-    <body class="bg-scroll bg-gradient-to-br from-transparent to-green-200 flex flex-col justify-center h-screen">
-
+    <body class="bg-scroll bg-gradient-to-br from-transparent to-green-200 flex flex-col justify-center h-screen my-0">
+        {% if user.is_authenticated %}
+        <div class="absolute top-0 left-5 right-5 flex justify-between">
+            <p>
+                Hi {{ user.username }}!
+            </p>
+            <p>
+                <a class="font-bold underline underline-offset-1 text-blue-900 hover:cursor-pointer hover:text-blue-500" href="{% url 'landbot/logout' %}">Log Out</a>
+            </p>
+        </div>
+        {% endif %}
         {% block content %}
         
         {% endblock %}

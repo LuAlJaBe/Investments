@@ -5,7 +5,7 @@ from landbot.validators import validate_greater_than_zero, validate_one_hour_aft
 
 # Create your models here.
 class Campaign(models.Model):
-    campaign_name = models.CharField(max_length=255, null=False, blank=False, unique=True)
+    template_name = models.CharField(max_length=255, null=False, blank=False, unique=True)
     audience = models.IntegerField(null=False, blank=False,
                                    validators=[validate_greater_than_zero])
     schedule = models.DateTimeField(null=False,blank=False, auto_now=False,auto_now_add=False,
@@ -17,4 +17,4 @@ class Campaign(models.Model):
         verbose_name_plural = 'Campaigns'
     
     def __str__(self):
-        return self.campaign_name
+        return self.template_name

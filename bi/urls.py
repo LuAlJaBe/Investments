@@ -15,10 +15,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.contrib.auth.views import LoginView, LogoutView
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("__reload__/", include("django_browser_reload.urls")),
     path('landbot/', include('landbot.urls')),
+    path('accounts/', include('django.contrib.auth.urls')),
+    path('login', LoginView.as_view(template_name='login.html'), name='landbot/login'),
+    path('logout', LogoutView.as_view(template_name='logout.html'), name='landbot/logout'),
 ]

@@ -23,11 +23,11 @@
             <tbody>
                 <tr>
                     <th>
-                        <label for="{{ fo.campaign_name.id_for_label }}">Campaign_name:</label>
+                        <label for="{{ fo.template_name.id_for_label }}">Template Name:</label>
                     </th>
                     <td>
-                        {{ fo.campaign_name.errors }}
-                        {{ fo.campaign_name }}
+                        {{ fo.template_name.errors }}
+                        {{ fo.template_name }}
                     </td>
                 </tr>
                 <tr>
@@ -64,9 +64,9 @@
 
         let container = document.createElement("table");
         let body = document.createElement("tbody");
-        let campaign_namerow = document.createElement("tr");
-        let campaign_namelabelcontainer = document.createElement("th");
-        let campaign_namedatacontainer =document.createElement("td");
+        let template_namerow = document.createElement("tr");
+        let template_namelabelcontainer = document.createElement("th");
+        let template_namedatacontainer =document.createElement("td");
         let audiencerow = document.createElement("tr");
         let audiencelabelcontainer = document.createElement("th");
         let audiencedatacontainer =document.createElement("td");
@@ -74,16 +74,16 @@
         let schedulelabelcontainer = document.createElement("th");
         let scheduledatacontainer =document.createElement("td");
 
-        let campaign_namelabel = document.createElement("label");
-        let campaign_namedata = document.querySelector("#id_form-0-campaign_name").cloneNode(true);
+        let template_namelabel = document.createElement("label");
+        let template_namedata = document.querySelector("#id_form-0-template_name").cloneNode(true);
         let audiencelabel = document.createElement("label");
         let audiencedata = document.querySelector("#id_form-0-audience").cloneNode(true);
         let schedulelabel = document.createElement("label");
         let scheduledata = document.querySelector("#id_form-0-schedule").cloneNode(true);
 
-        campaign_namelabel.innerHTML = 'Campaign name:';
-        campaign_namedata.name = 'form-'+total_forms.value+'-campaign_name';
-        campaign_namedata.id = 'id_form-'+total_forms.value+'-campaign_name';
+        template_namelabel.innerHTML = 'Campaign name:';
+        template_namedata.name = 'form-'+total_forms.value+'-template_name';
+        template_namedata.id = 'id_form-'+total_forms.value+'-template_name';
         audiencelabel.innerHTML = 'Audience:';
         audiencedata.name = 'form-'+total_forms.value+'-audience';
         audiencedata.id = 'id_form-'+total_forms.value+'-audience';
@@ -91,21 +91,21 @@
         scheduledata.name = 'form-'+total_forms.value+'-schedule';
         scheduledata.id = 'id_form-'+total_forms.value+'-schedule';
 
-        campaign_namelabelcontainer.appendChild(campaign_namelabel);
-        campaign_namedatacontainer.appendChild(campaign_namedata);
+        template_namelabelcontainer.appendChild(template_namelabel);
+        template_namedatacontainer.appendChild(template_namedata);
         audiencelabelcontainer.appendChild(audiencelabel);
         audiencedatacontainer.appendChild(audiencedata);
         schedulelabelcontainer.appendChild(schedulelabel);
         scheduledatacontainer.appendChild(scheduledata);
 
-        campaign_namerow.appendChild(campaign_namelabelcontainer)
-        campaign_namerow.appendChild(campaign_namedatacontainer);
+        template_namerow.appendChild(template_namelabelcontainer)
+        template_namerow.appendChild(template_namedatacontainer);
         audiencerow.appendChild(audiencelabelcontainer);
         audiencerow.appendChild(audiencedatacontainer);
         schedulerow.appendChild(schedulelabelcontainer);
         schedulerow.appendChild(scheduledatacontainer);
 
-        body.appendChild(campaign_namerow);
+        body.appendChild(template_namerow);
         body.appendChild(audiencerow);
         body.appendChild(schedulerow);
 
@@ -126,20 +126,20 @@
     }
 
     function verify_not_empty_fields() {
-        let campaign_name_inputs = document.querySelectorAll("input[id*=campaign_name]");
+        let template_name_inputs = document.querySelectorAll("input[id*=template_name]");
         let audience_inputs = document.querySelectorAll("input[id*=audience]");
         let schedule_inputs = document.querySelectorAll("input[id*=schedule]");
         let count = 0;
-        campaign_name_inputs.forEach(input => {
+        template_name_inputs.forEach(input => {
             let value = input.value;
             if (value != "") {
                 count++;
             }
         });
         console.log(count);
-        if (count == campaign_name_inputs.length) {
+        if (count == template_name_inputs.length) {
             able_submit_button();
-        } else if (count < campaign_name_inputs.length) {
+        } else if (count < template_name_inputs.length) {
             disable_submit_button();
         }
     }
