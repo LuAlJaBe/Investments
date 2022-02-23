@@ -20,3 +20,5 @@ RUN apt update && \
 RUN python -m pip install -r requirements.txt
 
 COPY . /bi/
+
+CMD [ "gunicorn", "-c", "config/gunicorn/conf.py", "--bind", ":80", "--chdir", "bi.wsgi:application"]
