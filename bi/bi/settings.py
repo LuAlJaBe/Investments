@@ -124,7 +124,8 @@ USE_TZ = True
 STATIC_URL = 'static/'
 TAILWIND_APP_NAME = "theme"
 INTERNAL_IPS = [
-    "127.0.0.1"
+    "127.0.0.1",
+    "django",
 ]
 
 # Default primary key field type
