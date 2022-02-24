@@ -1,22 +1,32 @@
-FROM python:3.9
+FROM python:3.9-alpine
 
+ENV PATH="/scripts:${PATH}"
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
-WORKDIR /bi
+COPY ./requirements.txt /requirements.txt
 
-COPY ./requirements.txt /bi/requirements.txt
-
-RUN apt update && \
-    apt upgrade -y && \
-    apt install -y \
-    python3-dev \
-    nodejs \
-    npm \
-    default-libmysqlclient-dev \
-    libssl-dev \
-    build-essential
+RUN apk add --update --no-cahce --virtual .tmp gcc libc-dev linux-headers
 
 RUN python -m pip install -r requirements.txt
 
+RUN apk del .tmp
+
 COPY ./bi /bi/
+
+WORKDIR /bi
+
+RUN apk add nodejs npm
+
+COPY ./scripts /scripts
+
+RUN chmod +x /scripts/*
+
+RUN mkdir -p /vol/web/media
+RUN mkdir -p /vol/web/
+
+RUN adduser -D user
+RUN chown -R user:user /vol
+RUN chmod -R 755 /vol/web
+USER user
+CMD ["entrypoint.sh"]

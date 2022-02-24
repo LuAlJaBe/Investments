@@ -6,13 +6,15 @@ services:
     build:
       context: .
     volumes:
-      - ./bi:/bi
-    ports:
-      - 8000:8000
-    command: >
-      sh -c "python manage.py makemigrations
-      && python manage.py migrate
-      && python manage.py runserver 0.0.0.0:8000"
+      - static_data:/vol/web
+    environment:
+      - DEBUG=${DEBUG}
+      - SECRET_KEY=${SECRET_KEY}
+      - ALLOWED_HOSTS=${ALLOWED_HOSTS}
+      - DATABASE_URL_DATALAKE=${DATABASE_URL_DATALAKE}
+      - DATABASE_URL_C4UNO=${DATABASE_URL_C4UNO}
+      - DATABASE_URL_BI=${DATABASE_URL_BI}
+      - LANDBOT_API_TOKEN=${LANDBOT_API_TOKEN}
     stdin_open: true
     tty: true
     depends_on:
@@ -29,6 +31,16 @@ services:
     volumes:
       - ${PG_HOST_VOLUME}:${PG_CONTAINER_VOLUME}
 
+  proxy:
+    build:
+      context: ./nginx
+    volumes:
+      - static_data:/vol/static
+    ports:
+      - "8000:8000"
+    depends_on:
+      - biweb
 
 volumes:
   pgdata:
+  static_data:
