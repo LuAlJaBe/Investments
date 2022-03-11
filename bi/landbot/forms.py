@@ -1,5 +1,5 @@
 from django import forms
-from landbot.models import Campaign
+from landbot.models import Campaign, Excel
 
 class CampaignsPreparerForm(forms.ModelForm):
     template_name = forms.CharField()
@@ -19,7 +19,9 @@ class CampaignsPreparerForm(forms.ModelForm):
     class Meta:
         model = Campaign
         fields = '__all__'
-    
-        
-    
 
+class ExcelUsersMatcherForm(forms.ModelForm):
+    excel = forms.FileField(widget=forms.FileInput())    
+    class Meta:
+        model = Excel
+        fields = '__all__'
