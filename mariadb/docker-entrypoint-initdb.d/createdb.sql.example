@@ -1,0 +1,36 @@
+###
+### Copy createdb.sql.example to createdb.sql
+### then uncomment then set database name and username to create you need databases
+#
+# example: .env MYSQL_USER=appuser and need db name is myshop_db
+#
+#    CREATE DATABASE IF NOT EXISTS `myshop_db` ;
+#    GRANT ALL ON `myshop_db`.* TO 'appuser'@'%' ;
+#
+###
+### this sql script is auto run when mariadb container start and $DATA_SAVE_PATH/mariadb not exists.
+###
+### if your $DATA_SAVE_PATH/mariadb is exists and you do not want to delete it, you can run by manual execution:
+###
+###     docker-compose exec mariadb bash
+###     mysql -u root -p < /docker-entrypoint-initdb.d/createdb.sql
+###
+
+CREATE DATABASE IF NOT EXISTS `c4uno_dev` COLLATE 'utf8_general_ci' ;
+CREATE DATABASE IF NOT EXISTS `c4uno_testing` COLLATE 'utf8_general_ci' ;
+
+CREATE DATABASE IF NOT EXISTS `c4uno_bi_dev` COLLATE 'utf8_general_ci' ;
+
+CREATE DATABASE IF NOT EXISTS `c4uno_persons_dev` COLLATE 'utf8_general_ci' ;
+CREATE DATABASE IF NOT EXISTS `c4uno_persons_testing` COLLATE 'utf8_general_ci' ;
+
+CREATE DATABASE IF NOT EXISTS `c4uno_operations_dev` COLLATE 'utf8_general_ci' ;
+CREATE DATABASE IF NOT EXISTS `c4uno_operations_testing` COLLATE 'utf8_general_ci' ;
+
+CREATE DATABASE IF NOT EXISTS `c4uno_epayment_dev` COLLATE 'utf8_general_ci' ;
+CREATE DATABASE IF NOT EXISTS `c4uno_epayment_testing` COLLATE 'utf8_general_ci' ;
+
+CREATE DATABASE IF NOT EXISTS `bamba_customer_gateway_dev` COLLATE 'utf8_general_ci' ;
+CREATE DATABASE IF NOT EXISTS `bamba_customer_gateway_testing` COLLATE 'utf8_general_ci'
+
+FLUSH PRIVILEGES ;

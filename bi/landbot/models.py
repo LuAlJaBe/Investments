@@ -18,3 +18,15 @@ class Campaign(models.Model):
     
     def __str__(self):
         return self.template_name
+
+class Excel(models.Model):
+    excel = models.FileField(upload_to='uploads/',null=False, blank=False)
+    class Meta:
+        verbose_name = 'excel'
+        verbose_name_plural = 'excel'
+        db_table = 'excel'
+    
+    def __str__(self):
+        return '{}'.format(self.excel)
+        
+    
