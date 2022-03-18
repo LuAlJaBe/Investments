@@ -37,14 +37,14 @@ class ZendeskExcelFile(Query):
         
     def set_query_df(self):
         self.query_df = pd.read_sql(con=self.c4uno_conn, sql=self.users_companies_match_query, params={'zendesk_ids':self.zendesk_ids})
-        self.query_df.drop_duplicates(subset=['user_id'],keep='last',inplace=True)
+        self.query_df.drop_duplicates(subset=['Id de usuario de beneficiario'],keep='last',inplace=True)
     
     def merge_excel_and_query_dataframes(self):
         self.query_df[['service_user_id']] = self.query_df[['service_user_id']].apply(pd.to_numeric)
         self.new_excel_df = self.excel_df.merge(self.query_df, left_on='ID del solicitante', right_on='service_user_id', how='left')
     
     def save_excel(self):
-        # Export as xlsx
+        # Export as xlsx (deprecated)
         self.__writer = pd.ExcelWriter(self.__path)
         self.new_excel_df.to_excel(self.__writer, 'Nueva consulta ANDREA', index=False)
         self.__writer.save()
@@ -55,4 +55,4 @@ class ZendeskExcelFile(Query):
         self.set_c4uno_conn()
         self.set_query_df()
         self.merge_excel_and_query_dataframes()
-        self.save_excel()
+        return self.new_excel_df

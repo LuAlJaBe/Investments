@@ -15,6 +15,11 @@ services:
       - DATABASE_URL_C4UNO=${DATABASE_URL_C4UNO}
       - DATABASE_URL_BI=${DATABASE_URL_BI}
       - LANDBOT_API_TOKEN=${LANDBOT_API_TOKEN}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_NAME=${DB_NAME}
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
     stdin_open: true
     tty: true
     depends_on:
