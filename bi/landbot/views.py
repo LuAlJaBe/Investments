@@ -29,16 +29,16 @@ def match_users(request):
         form = ExcelUsersMatcherForm(request.POST, request.FILES)
         if form.is_valid():
             filename = request.FILES['excel'].name
-            filepath = join(dirname(dirname(dirname(__file__))), 'vol', 'web', 'media', 'uploads', filename)
             excel = Excel(excel=request.FILES['excel'])
             excel.save()
             zendesk_excel = ZendeskExcelFile(name=filename)
             new_excel_df = zendesk_excel.match()
             with BytesIO() as b:
                 # Use the StringIO object as the filehandle.
-                writer = ExcelWriter(b, engine='openpyxl')
+                writer = ExcelWriter(b, engine='xlsxwriter')
                 new_excel_df.to_excel(writer, sheet_name='Sheet1')
                 writer.save()
+                b.seek(0)
                 # Set up the Http response.
                 filename = 'new_excel.xlsx'
                 response = HttpResponse(
