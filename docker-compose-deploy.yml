@@ -21,6 +21,7 @@ services:
       - DB_HOST=${DB_HOST}
       - DB_PORT=${DB_PORT}
     stdin_open: true
+    restart: "unless-stopped"
     tty: true
     depends_on:
       - bidb

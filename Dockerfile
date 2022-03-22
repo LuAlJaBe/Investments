@@ -34,6 +34,8 @@ RUN mkdir -p /vol/web/static
 
 RUN adduser --disabled-login user
 RUN chown -R user:user /vol
+RUN chown -R user:user /bi/theme
 RUN chmod -R 755 /vol/web
+RUN chmod -R 777 /bi/theme/static
 USER user
 CMD ["entrypoint.sh"]
