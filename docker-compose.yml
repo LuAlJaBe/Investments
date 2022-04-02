@@ -1,30 +1,27 @@
 version: '3'
 
 services:
-  biweb:
-    container_name: biweb
+  invweb:
+    container_name: invweb
     build:
       context: .
     volumes:
-      - ./bi:/bi
+      - ./investments:/investments
     ports:
       - 8000:8000
     command: >
       bash -c "python manage.py makemigrations
-      && python manage.py makemigrations landbot
       && python manage.py migrate
       && python manage.py runserver 0.0.0.0:8000"
     stdin_open: true
     tty: true
     depends_on:
-      - bidb
-      - mariadb
-    links:
-      - mariadb:mariadb
+      - invdb
 
-  bidb:
+
+  invdb:
     image: ${PG_BASE_IMAGE}
-    container_name: bidb
+    container_name: invdb
     environment:
       - POSTGRES_DB=${POSTGRES_DB}
       - POSTGRES_USER=${POSTGRES_USER}
@@ -35,27 +32,5 @@ services:
     ports:
       - "5432:5432"
 
-  mariadb:
-    container_name: mariadb
-    image: yobasystems/alpine-mariadb:10.4.12
-    volumes:
-    # If you present problems by creating data folder
-    # for mysql see https://github.com/MariaDB/mariadb-docker/issues/95
-    # you can substitute .laradock/data => laradock_data to fix the problems
-    # Problem appeared in Windows and Linux boxes.
-      - ${DATA_PATH_HOST}/mariadb:/var/lib/mysql
-      - ${MARIADB_ENTRYPOINT_INITDB}:/docker-entrypoint-initdb.d
-    environment:
-      - MYSQL_DATABASE=${MARIADB_DATABASE}
-      - MYSQL_USER=${MARIADB_USER}
-      - MYSQL_PASSWORD=${MARIADB_PASSWORD}
-      - MYSQL_ROOT_PASSWORD=${MARIADB_ROOT_PASSWORD}
-    ports:
-      - "${MARIADB_PORT}:3306"
-
-
-
 volumes:
-  pgdata:
-  mariadb:
-    driver: ${VOLUMES_DRIVER}
+  pg_inv_data:

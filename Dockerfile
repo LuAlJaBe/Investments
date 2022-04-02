@@ -21,21 +21,19 @@ RUN apt install -y nginx
 
 RUN python -m pip install -r requirements.txt
 
-COPY ./bi /bi/
+COPY ./investments /investments/
 
-WORKDIR /bi
+WORKDIR /investments
 
 COPY ./scripts /scripts
 
 RUN chmod +x /scripts/*
 
-RUN mkdir -p /vol/web/media
-RUN mkdir -p /vol/web/static
+RUN mkdir -p /vol/invweb/media
+RUN mkdir -p /vol/invweb/static
 
 RUN adduser --disabled-login user
 RUN chown -R user:user /vol
-RUN chown -R user:user /bi/theme
-RUN chmod -R 755 /vol/web
-RUN chmod -R 777 /bi/theme/static
+RUN chmod -R 755 /vol/invweb
 USER user
 CMD ["entrypoint.sh"]
